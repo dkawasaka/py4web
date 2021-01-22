@@ -73,11 +73,11 @@ class CallbackFactory:
         @action(path, method="POST")
         @action.uses(*self.fixtures)
         def tmp(func=func):
-            data = jwt.decode(json.loads(request.body.read()), Session.SECRET)
+            data = jwt.decode(json.loads(request.body.read()), Session.SECRET, algorithms=["HS256"])
             return func(**data)
 
         def get_link(**data):
-            return (URL(path), jwt.encode(data, Session.SECRET).decode())
+            return (URL(path), jwt.encode(data, Session.SECRET).encode().decode())
 
         def button(*components, **attributes):
             def button_maker(**data):
