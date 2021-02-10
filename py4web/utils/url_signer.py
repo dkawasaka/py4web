@@ -113,7 +113,7 @@ class URLSigner(Fixture):
         if self.lifespan is not None:
             payload["exp"] = time.time() + self.lifespan
         key = self.get_url_key(url, variables)
-        return jwt.encode(payload, key, algorithm="HS256").decode("utf-8")
+        return jwt.encode(payload, key, algorithm="HS256").encode().decode("utf-8")
 
     def sign_vars(self, url, variables):
         """Signs a URL, adding to vars (the variables of the URL) a signature."""
